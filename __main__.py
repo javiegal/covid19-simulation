@@ -7,6 +7,11 @@ from sklearn.impute import SimpleImputer
 
 
 def exploratory_analysis(df, maps):
+    """
+    Performs an exploratory analysis over the COVID-19 simulation dataframe
+    :param df: COVID-19 simulation dataframe
+    :param maps: dictionaries for categorical values
+    """
     fig = df.hist(column=['TEMP', 'HEART_RATE', 'SAT_O2', 'BLOOD_PRES_SYS', 'BLOOD_PRES_DIAS'], figsize=(15, 10),
                   xlabelsize=16, ylabelsize=16)
     [x.title.set_size(16) for x in fig.ravel()]
@@ -63,8 +68,10 @@ def exploratory_analysis(df, maps):
 
 
 def correlation_analysis(df):
-    # Correlation
-
+    """
+    Performs a correlation analysis over the COVID-19 simulation dataframe
+    :param df: COVID-19 simulation dataframe
+    """
     fig, ax = plt.subplots(figsize=(12, 10))
 
     sns.set(font_scale=1.5)
@@ -76,6 +83,10 @@ def correlation_analysis(df):
 
 
 def survival_curves(df):
+    """
+    Calculates survival curves for the COVID-19 simulation dataframe
+    :param df: COVID-19 simulation dataframe
+    """
     # Survival curves
     time = df['DAYS_HOSPITAL']
     event_observed = df['EXITUS']
@@ -89,42 +100,38 @@ def survival_curves(df):
     # ci_show is meant for Confidence interval, since our data set is too tiny, thus we are not showing it.
     kmf.plot_survival_function(ci_show=False)
 
-    ax.set_ylabel("est. probability of survival $\hat{S}(t)$", fontsize=16)
-    ax.set_xlabel("time $t$", fontsize=16)
+    ax.set_ylabel("est. probability of survival", fontsize=16)
+    ax.set_xlabel("Days in hospital", fontsize=16)
     ax.tick_params(axis='both', which='major', labelsize=16)
     ax.legend(prop={'size': 16})
     plt.savefig("imgs/kaplan_meier.png")
 
+    # Separate ICU treatment and no treatment
+    fig2, ax2 = plt.subplots(figsize=(8, 5))
+
     g1 = df['DAYS_ICU'] == 0
     g2 = df['DAYS_ICU'] > 0
-
-    # create a kmf object
     kmf = KaplanMeierFitter()
+
     kmf.fit(time[g1], event_observed[g1], label='No ICU')  # fit the cohort 1 data
-
-    fig2, ax2 = plt.subplots(figsize=(8, 5))
     kmf.plot_survival_function()
-
-    ax2.set_ylabel("est. probability of survival $\hat{S}(t)$", fontsize=16)
-    ax2.set_xlabel("time $t$", fontsize=16)
-    ax2.tick_params(axis='both', which='major', labelsize=16)
-    ax2.legend(prop={'size': 16})
-    plt.savefig("imgs/kaplan_meier_no_icu.png")
 
     kmf.fit(time[g2], event_observed[g2], label='ICU treatment')  # fit the cohort 2 data
-
-    fig3, ax3 = plt.subplots(figsize=(8, 5))
     kmf.plot_survival_function()
 
-    ax3.set_ylabel("est. probability of survival $\hat{S}(t)$", fontsize=16)
-    ax3.set_xlabel("time $t$", fontsize=16)
-    ax3.tick_params(axis='both', which='major', labelsize=16)
-    ax3.legend(prop={'size': 16})
-    plt.savefig("imgs/kaplan_meier_icu.png")
+    ax2.set_ylabel("est. probability of survival", fontsize=16)
+    ax2.set_xlabel("Days in hospital", fontsize=16)
+    ax2.tick_params(axis='both', which='major', labelsize=16)
+    ax2.legend(prop={'size': 16})
+    plt.savefig("imgs/kaplan_meier_comp.png")
 
 
 def preprocess(df):
-    # Missing values
+    """
+    Preprocessing of the COVID-19 simulation dataframe
+    :param df: COVID-19 simulation dataframe
+    :return: processed dataframe
+    """
     print('--------------MISSING VALUES--------------')
     print(df.isnull().sum())
 
@@ -154,7 +161,7 @@ def preprocess(df):
     print(df.sort_values(by='AGE', ascending=False).head(10))
     df = df[df['AGE'] <= 120]
 
-    print('\n--------------MOST DAYS IN HOSPITAL. 10 ELEMENTS--------------')
+    print('\n--------------LESS DAYS IN HOSPITAL. 10 ELEMENTS--------------')
     print(df.sort_values(by='DAYS_HOSPITAL', ascending=True).head(10))
     df1 = df[(df.TEMP == 0) & (df.HEART_RATE == 0) & (df.GLUCOSE == 0) & (df.SAT_O2 == 0) & (df.BLOOD_PRES_SYS == 0) & (
             df.BLOOD_PRES_DIAS == 0)]
@@ -168,10 +175,6 @@ def preprocess(df):
     print(df.sort_values(by='HEART_RATE', ascending=False).head(10))
     df = df[df['HEART_RATE'] <= 200]
 
-    print('\n--------------HIGHEST GLUCOSE. 10 ELEMENTS--------------')
-    print(df.sort_values(by='GLUCOSE', ascending=False).head(10))
-    # Mirar en internet a partir de qué valor es imposible
-
     print('\n--------------HIGHEST BLOOD_PRES_SYS. 10 ELEMENTS--------------')
     print(df.sort_values(by='BLOOD_PRES_SYS', ascending=False).head(10))
     df = df[df['BLOOD_PRES_SYS'] <= 200]
@@ -182,6 +185,8 @@ def preprocess(df):
 
     print('\n--------------NUMBER OF VALUES EQUAL TO ZERO--------------')
     print((df == 0).astype(int).sum(axis=0))
+    print('\n--------------DATAFRAME SHAPE--------------')
+    print(df.shape)
 
     df.pop('GLUCOSE')
     df['EXITUS'] = df['EXITUS'].astype('category')
@@ -205,8 +210,8 @@ def main():
     # Save processed DataFrame
     df.to_csv('processed_COVID.csv', header=True, index=False)
 
-    exploratory_analysis(df, maps)
-    correlation_analysis(df)
+    # exploratory_analysis(df, maps)
+    # correlation_analysis(df)
     survival_curves(df)
 
 
