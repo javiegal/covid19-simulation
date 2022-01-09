@@ -26,16 +26,11 @@ Prediction models have been developed using the following software:
 
 
 ## Usage
-You can reproduce the data analysis performed by executing the following command:
+To reproduce the data analysis performed, extract the content of the zip file in a folder and execute the following command:
 ```
-$ python covid19-simulation.zip
+$ python FOLDER_PATH
 ```
-
-Otherwise, you can extract the folder and execute the command:
-```
-$ python EXTRACTED_FOLDER_PATH
-```
-This will produce the console output, images (in `covid19-simulation/imgs` folder) and processed data (in `covid19-simulation/data` folder) explained in the [technical report](./docs/technical_report.pdf).
+This execution will produce the console output, images (in `covid19-simulation/imgs` folder) and processed data (in `covid19-simulation/data` folder) explained in the [technical report](./docs/technical_report.pdf).
 
 ## Authors
 - María Ayuso Luengo ([@mariaayuso](https://github.com/mariaayuso))
