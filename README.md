@@ -38,7 +38,7 @@ $ python EXTRACTED_FOLDER_PATH
 This will produce the console output, images (in `covid19-simulation/imgs` folder) and processed data (in `covid19-simulation/data` folder) explained in the [technical report](./docs/technical_report.pdf).
 
 ## Authors
-- María Ayuso Luengo ([@pablo-crucera](https://github.com/pablo-crucera))
+- María Ayuso Luengo ([@mariaayuso](https://github.com/mariaayuso))
 - Doga Cengiz ([@dogacengiz](https://github.com/dogacengiz))
 - Javier Gallego Gutiérrez ([@javiegal](https://github.com/javiegal))
 - Pablo Hernández Carrascosa ([@pablohdez98](https://github.com/pablohdez98))
