@@ -203,8 +203,8 @@ def preprocess(df):
 
 def main():
     # Load and read dataset
-    url = 'https://raw.githubusercontent.com/javiegal/covid19-simulation/main/COVID19_data.csv'
-    initial_df = pd.read_csv(url, index_col=0)
+    path = './data/COVID19_data.csv'
+    initial_df = pd.read_csv(path, index_col=0)
     df, maps = preprocess(initial_df)
 
     # Save processed DataFrame
