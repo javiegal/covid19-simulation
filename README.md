@@ -7,8 +7,8 @@ Project developed for the Data Processes course of the Master's Programme in Dat
 This repository contains all the work done for the Data Processes assignment described in the [assignment guide](./docs/assignment_guide.pdf).
 
 ## Deliverables
-- [Project plan](./docs/project_plan.pdf).
-- [Technical report](./docs/technical_report.pdf).
+- [Project plan](./docs/project_plan.pdf) placed in the `docs` folder.
+- [Technical report](./docs/technical_report.pdf) placed in the `docs` folder.
 - [Python script](./__main__.py) with the data analysis.
 - [KNIME package](./models/knime-export.knar) with the prediction model.
 
