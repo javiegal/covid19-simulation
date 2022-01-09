@@ -10,7 +10,7 @@ This repository contains all the work done for the Data Processes assignment des
 - [Project plan](./docs/project_plan.pdf).
 - [Technical report](./docs/technical_report.pdf).
 - [Python script](./__main__.py) with the data analysis.
-- [KNIME package]() with the prediction model.
+- [KNIME package](./models/knime-export.knar) with the prediction model.
 
 ## Requirements
 The data analysis has been developed using the following software:
