@@ -4,6 +4,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 from lifelines import KaplanMeierFitter
 from sklearn.impute import SimpleImputer
+import os
 
 
 def exploratory_analysis(df, maps):
@@ -203,15 +204,17 @@ def preprocess(df):
 
 def main():
     # Load and read dataset
+    work_path = os.path.dirname(__file__)
+    os.chdir(work_path)
     path = './data/COVID19_data.csv'
     initial_df = pd.read_csv(path, index_col=0)
     df, maps = preprocess(initial_df)
 
     # Save processed DataFrame
-    df.to_csv('processed_COVID.csv', header=True, index=False)
+    df.to_csv('./data/processed_COVID.csv', header=True, index=False)
 
-    # exploratory_analysis(df, maps)
-    # correlation_analysis(df)
+    exploratory_analysis(df, maps)
+    correlation_analysis(df)
     survival_curves(df)
 
 
